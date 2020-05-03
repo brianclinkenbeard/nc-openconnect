@@ -1,0 +1,26 @@
+#!/bin/sh
+# connects to SSH through openconnect and VPN
+# for use with ProxyCommand in SSH
+
+AUTHGROUP='' # sometimes required
+USER=''
+PASSWD_CMD='' # e.g. 'echo password123'
+VPN=''
+
+PIDFILE='/tmp/openconnect.pid'
+PORT=9052
+
+# run openconnect
+eval "$PASSWD_CMD" | openconnect --passwd-on-stdin -b -q -S \
+	--pid-file "$PIDFILE" \
+	--authgroup="$AUTHGROUP" \
+	-u "$USER" \
+   	-s "ocproxy -D $PORT" \
+	"$VPN"
+sleep 2 # wait for openconnect to establish connection
+
+# kill openconnect on exit
+trap '[ -f $PIDFILE ] && pkill -F $PIDFILE' EXIT INT HUP TERM
+
+# redirect traffic (standard input and output) through VPN
+nc -X 5 -x 127.0.0.1:9052 "$1" "$2"
