@@ -7,7 +7,7 @@ A shell script to access SSH through a OpenConnect-compatible (e.g. AnyConnect) 
 - ocproxy
 
 ### Script configuration
-Download the script to a folder in your `PATH`. Fill out the necessary fields, and provide the password from plaintext or a keyring:
+[Download the script](https://raw.githubusercontent.com/brianclinkenbeard/nc-openconnect/master/nc-openconnect) to a folder in your `PATH`. Fill out the necessary fields, and provide the password from plaintext or a keyring:
 ```
 USER='bclinkenbeard'
 PASSWD_CMD='echo my_pass'
