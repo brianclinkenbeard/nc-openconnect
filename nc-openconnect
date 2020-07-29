@@ -23,4 +23,4 @@ sleep 2 # wait for openconnect to establish connection
 trap '[ -f $PIDFILE ] && pkill -F $PIDFILE' EXIT INT HUP TERM
 
 # redirect traffic (standard input and output) through VPN
-nc -X 5 -x 127.0.0.1:9052 "$1" "$2"
+nc -X 5 -x "127.0.0.1:$PORT" "$1" "$2"
